@@ -1,7 +1,11 @@
+@import url(../../lib/font/open-sans/font.css);
 .highcharts-container { 
-    overflow: visible !important; 
+    overflow: visible !important;
 }
 
+.highcharts-root {
+    font-family: 'Open Sans', sans-serif !important;
+}
 
 .MyDataLabelTooltip {
     position: relative !important;
