@@ -25,11 +25,11 @@
 
     <!-- Printing and PDF exports -->
     <script>
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-            document.getElementsByTagName('head')[0].appendChild(link);
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
+            document.getElementsByTagName("head")[0].appendChild(link);
         </script>
 </head>
 
@@ -69,19 +69,19 @@
 //---------------------------------------------------------
 //                                CHART 1
 //---------------------------------------------------------
-            var chart1; 
+            var chart1;
             var chart1Data;
             var chart1_last_month;
             var chart1Timeout0;
             var chart1Timeout1;
-            
+
             function startAnimatingChart1() {
                 clearTimeout(chart1Timeout0);
                 clearTimeout(chart1Timeout1);
                 //1. Start by animating background
 
                 //2. Animate in chart for this year
-                chart1Timeout0 = setTimeout(function() {                    
+                chart1Timeout0 = setTimeout(function() {
 
 
                     drawChart1();
@@ -91,7 +91,7 @@
                 chart1Timeout1 = setTimeout(function() {
                     chart1.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
@@ -114,7 +114,7 @@
                     folkatal = ds.Data({ "changes": "PRIMO", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < folkatal.length; j++) {
-                        mon = m[j].replace('M', '-');
+                        mon = m[j].replace("M", "-");
                         folkataldata.push([Date.parse(year[i] + mon), folkatal[j]]);
                         nextMonth = year[i] + mon
 
@@ -148,9 +148,9 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Fólkatal',
+                    name: "Fólkatal",
                     data: folkataldata,
-                    color: '#fff',
+                    color: "#fff",
                     tooltip: {
                         valueDecimals: 0
                     }
@@ -165,10 +165,10 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
@@ -176,15 +176,15 @@
 
 
                 //Build Chart
-                $('#chart1').highcharts({
+                $("#chart1").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'line',
+                        type: "line",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         marginRight: 20,
                         events: {
                             load: function () {
@@ -208,13 +208,13 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
@@ -224,33 +224,32 @@
                         tickInterval: 2629746000,
                         min: chart1_last_month - 65743595833,
                         max: chart1_last_month,
-                        type: 'datetime',
+                        type: "datetime",
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             },
                         }
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(this.value, 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                     },
@@ -270,22 +269,21 @@
                             },
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  Highcharts.dateFormat('%e. %b &apos;%y',this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,0)  + "</div>");
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' +  Highcharts.dateFormat("%e. %b &apos;%y",this.point.x) + "</span><br />" +  Highcharts.numberFormat(this.point.y,0)  + "</div>");
                                   }
                                   else {return};
-                                }                             
+                                }
                             }
                         },
                         series: {
-                            showInNavigator: true,                         
+                            showInNavigator: true,
                         }
                     },
                     series: createdSeries
@@ -332,7 +330,7 @@
 //---------------------------------------------------------
 //                                CHART 2
 //---------------------------------------------------------
-            var chart2; 
+            var chart2;
             var chart2Data;
             var chart2CreatedSeries;
             var chart2_last_month;
@@ -350,26 +348,26 @@
                 drawChart2();
 
                 chart2Timeout0 = setTimeout(function() {
-                    chart2.addSeries(chart2CreatedSeries[0]);    
+                    chart2.addSeries(chart2CreatedSeries[0]);
                 }, 0);
                 chart2Timeout1 = setTimeout(function() {
-                    chart2.addSeries(chart2CreatedSeries[1]);    
+                    chart2.addSeries(chart2CreatedSeries[1]);
                 }, 2000);
                 chart2Timeout2 = setTimeout(function() {
-                    chart2.addSeries(chart2CreatedSeries[2]);    
+                    chart2.addSeries(chart2CreatedSeries[2]);
                 }, 4000);
 
                 chart2Timeout3 =setTimeout(function () {
                     chart2.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
 
             //Chart 2 specific functions
             function drawChart2() {
-                
+
                 var jsonStatData = chart2Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -377,7 +375,7 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                    
+
                 //Format Data
 
 
@@ -394,7 +392,7 @@
                     fraflyting = ds.Data({ "changes": "EMIUT", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < tilflyting.length; j++) {
-                        mon = m[j].replace('M', '-');
+                        mon = m[j].replace("M", "-");
 
                         yaxistilflyting.push[tilflyting[j]];
                         yaxisfraflyting.push[-fraflyting[j]];
@@ -411,27 +409,26 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Tilflyting',
+                    name: "Tilflyting",
                     data: tilflytingdata,
-                    color: '#7fb800',
+                    color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Fráflyting',
+                    name: "Fráflyting",
                     data: fraflytingdata,
-                    color: '#9b1212',
+                    color: "#9b1212",
                     borderWidth: 0,
-                    
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Nettoflyting',
-                    type: 'spline',
+                    name: "Nettoflyting",
+                    type: "spline",
                     data: nettoflytingdata,
-                    color: '#fff',
+                    color: "#fff",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -451,25 +448,24 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
-
-                    return s;
-                }
+                        return s;
+                    }
 
                 //Build Chart
-                $('#chart2').highcharts({
+                $("#chart2").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart2 = this;
@@ -492,48 +488,47 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart2_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart2_last_month - 65743595833,
                         max: chart2_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         }
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(Math.abs(this.value),0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -543,12 +538,12 @@
                     },
                     plotOptions: {
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                             dataGrouping:{
                                 enabled: true,
                                 approximation: "sum",
-                                units:[ ['year', null]]
+                                units:[ ["year", null]]
                             }
                         }
                     },
@@ -596,7 +591,7 @@
 //---------------------------------------------------------
 //                                CHART 3
 //---------------------------------------------------------
-            var chart3; 
+            var chart3;
             var chart3Data;
             var chart3CreatedSeries;
             var chart3_last_month;
@@ -614,26 +609,26 @@
                 drawChart3();
 
                 chart3Timeout0 = setTimeout(function() {
-                    chart3.addSeries(chart3CreatedSeries[0]);    
+                    chart3.addSeries(chart3CreatedSeries[0]);
                 }, 0);
                 chart3Timeout1 = setTimeout(function() {
-                    chart3.addSeries(chart3CreatedSeries[1]);    
+                    chart3.addSeries(chart3CreatedSeries[1]);
                 }, 2000);
                 chart3Timeout2 = setTimeout(function() {
-                    chart3.addSeries(chart3CreatedSeries[2]);    
+                    chart3.addSeries(chart3CreatedSeries[2]);
                 }, 4000);
 
                 chart3Timeout3 =setTimeout(function () {
                     chart3.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
 
             //Chart 3 specific functions
             function drawChart3() {
-                
+
                 var jsonStatData = chart3Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -641,7 +636,7 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                    
+
                 //Format Data
 
 
@@ -658,7 +653,7 @@
                     fraflyting = ds.Data({ "changes": "DEAD", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < tilflyting.length; j++) {
-                        mon = m[j].replace('M', '-');
+                        mon = m[j].replace("M", "-");
 
                         yaxistilflyting.push[tilflyting[j]];
                         yaxisfraflyting.push[-fraflyting[j]];
@@ -675,27 +670,26 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Fødd',
+                    name: "Fødd",
                     data: tilflytingdata,
-                    color: '#7fb800',
+                    color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Deyð',
+                    name: "Deyð",
                     data: fraflytingdata,
-                    color: '#9b1212',
+                    color: "#9b1212",
                     borderWidth: 0,
-                    
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Burðaravlop',
-                    type: 'spline',
+                    name: "Burðaravlop",
+                    type: "spline",
                     data: nettoflytingdata,
-                    color: '#fff',
+                    color: "#fff",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -715,25 +709,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart3').highcharts({
+                $("#chart3").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart3 = this;
@@ -756,48 +750,47 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart3_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart3_last_month - 65743595833,
                         max: chart3_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         }
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(Math.abs(this.value), 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -807,12 +800,12 @@
                     },
                     plotOptions: {
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                             dataGrouping:{
                                 enabled: true,
                                 approximation: "sum",
-                                units:[ ['year', null]]
+                                units:[ ["year", null]]
                             }
                         }
 
@@ -861,7 +854,7 @@
 //---------------------------------------------------------
 //                       CHART 4
 //---------------------------------------------------------
-            var chart4; 
+            var chart4;
             var chart4Data;
             var chart4_last_month;
             var chart4Timeout0;
@@ -874,7 +867,7 @@
                 chart4Timeout0 = setTimeout(function () {
                     chart4.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
@@ -911,9 +904,9 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Arbeiðsloysi',
+                    name: "Arbeiðsloysi",
                     data: unemploymentdata,
-                    color: '#fff',
+                    color: "#fff",
                     tooltip: {
                         valueDecimals: 1
                     }
@@ -928,17 +921,17 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart4').highcharts({
+                $("#chart4").highcharts({
                     credits: {
                         enabled: false
                     },
@@ -946,14 +939,13 @@
                         type:"line",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart4 = this;
                             }
                         }
-                    }
-                    ,
+                    },
                     rangeSelector: {
                         enabled: false
                     },
@@ -968,13 +960,12 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
-
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
@@ -982,39 +973,37 @@
                             enabled: false
                         },
                         tickInterval: 2629746000,
-                        type: 'datetime',
-                        lineColor: '#fff',
-                        tickColor: '#fff',
-                        min: chart4_last_month - 65743595833, 
+                        type: "datetime",
+                        lineColor: "#fff",
+                        tickColor: "#fff",
+                        min: chart4_last_month - 65743595833,
                         max: chart4_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         }
-
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         tickInterval: 0.5,
                         labels: {
                             formatter: function () {
-                                return Highcharts.numberFormat(this.value, 1) + ' %';
+                                return Highcharts.numberFormat(this.value, 1) + " %";
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                     },
@@ -1023,7 +1012,7 @@
                     },
                     legend: {
                         enabled: false
-                    },                    
+                    },
                     plotOptions: {
                         line: {
                             marker: {
@@ -1031,19 +1020,18 @@
                             },
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  Highcharts.dateFormat('%b &apos;%y',this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,1) + "%" + "</div>");
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' +  Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" +  Highcharts.numberFormat(this.point.y,1) + "%" + "</div>");
                                   }
                                   else {return};
-                                }                             
-                            }                            
+                                }
+                            }
                         },
                         series: {
                             showInNavigator: true
@@ -1101,7 +1089,7 @@
 //---------------------------------------------------------
 //                                CHART 5
 //---------------------------------------------------------
-            var chart5; 
+            var chart5;
             var chart5Data;
             var chart5CreatedSeries;
             var chart5_last_month;
@@ -1117,23 +1105,23 @@
                 drawChart5();
 
                 chart5Timeout0 = setTimeout(function() {
-                    chart5.addSeries(chart5CreatedSeries[0]);    
+                    chart5.addSeries(chart5CreatedSeries[0]);
                 }, 100);
                 chart5Timeout1 = setTimeout(function() {
-                    chart5.addSeries(chart5CreatedSeries[1]);    
+                    chart5.addSeries(chart5CreatedSeries[1]);
                 }, 2000);
 
                 chart5Timeout3 =setTimeout(function () {
                     chart5.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
 
             //Chart 5 specific functions
             function drawChart5() {
-                
+
                 var jsonStatData = chart5Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -1141,8 +1129,8 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                    
-            
+
+
             //Format Data
 
                 var lontakarardata = [];
@@ -1153,7 +1141,7 @@
 
                 for (var i = 0; i < fLen; i++) {
                     lontakarar = ds.Data({ "value mode": "LT", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });                    
+                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < lontakarar.length; j++) {
                          var month = m[j];
@@ -1171,18 +1159,18 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Løntakarar',
+                    name: "Løntakarar",
                     data: lontakarardata,
-                    color: '#7fb800',
+                    color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Trendur',
-                    type: 'spline',
+                    name: "Trendur",
+                    type: "spline",
                     data: trendurdata,
-                    color: '#fff',
+                    color: "#fff",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1202,25 +1190,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart5').highcharts({
+                $("#chart5").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart5 = this;
@@ -1243,51 +1231,50 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart5_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart5_last_month - 65743595833,
                         max: chart5_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                         showLastLabel: true,
- 
+
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
                         min: 17000,
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(this.value, 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -1297,26 +1284,26 @@
                     },
                     plotOptions: {
                         series: {
-                            stacking: 'normal',
-                            showInNavigator: true,
+                            stacking: "normal",
+                            showInNavigator: true
                         },
                         column: {
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  Highcharts.dateFormat('%b &apos;%y',this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,0)  + "</div>");
+
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0)  + "</div>");
                                   }
                                   else {return};
-                                }                             
+                                }
                             }
-                        },                        
+                        },
 
                     },
                     series: []
@@ -1356,7 +1343,7 @@
 //---------------------------------------------------------
 //                                CHART 6
 //---------------------------------------------------------
-            var chart6; 
+            var chart6;
             var chart6Data;
             var chart6CreatedSeries;
             var chart6_last_month;
@@ -1372,23 +1359,23 @@
                 drawChart6();
 
                 chart6Timeout0 = setTimeout(function() {
-                    chart6.addSeries(chart6CreatedSeries[0]);    
+                    chart6.addSeries(chart6CreatedSeries[0]);
                 }, 100);
                 chart6Timeout1 = setTimeout(function() {
-                    chart6.addSeries(chart6CreatedSeries[1]);    
+                    chart6.addSeries(chart6CreatedSeries[1]);
                 }, 2000);
 
                 chart6Timeout3 =setTimeout(function () {
                     chart6.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
 
             //Chart 6 specific functions
             function drawChart6() {
-                
+
                 var jsonStatData = chart6Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -1396,8 +1383,8 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                    
-            
+
+
             //Format Data
 
                 var lontakarardata = [];
@@ -1408,7 +1395,7 @@
 
                 for (var i = 0; i < fLen; i++) {
                     lontakarar = ds.Data({ "value mode": "WA", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });                    
+                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < lontakarar.length; j++) {
                          var month = m[j];
@@ -1425,18 +1412,18 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Lønargjaldingar',
+                    name: "Lønargjaldingar",
                     data: lontakarardata,
-                    color: '#7fb800',
+                    color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Trendur',
-                    type: 'spline',
+                    name: "Trendur",
+                    type: "spline",
                     data: trendurdata,
-                    color: '#fff',
+                    color: "#fff",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1456,25 +1443,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart6').highcharts({
+                $("#chart6").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart6 = this;
@@ -1497,50 +1484,49 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart6_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart6_last_month - 65743595833,
                         max: chart6_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
-                        showLastLabel: true,
- 
+                        showLastLabel: true
+
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(this.value, 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -1550,27 +1536,25 @@
                     },
                     plotOptions: {
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                         },
                         column: {
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  Highcharts.dateFormat('%b &apos;%y',this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,0)  + " mió." +  "</div>");
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0) + " mió.</div>");
                                   }
                                   else {return};
-                                }                             
+                                }
                             }
-                        },                        
-
+                        },
                     },
                     series: []
                 });
@@ -1605,8 +1589,8 @@
 //---------------------------------------------------------
 //                                CHART 7
 //---------------------------------------------------------
-            
-            var chart7; 
+
+            var chart7;
             var chart7Data;
             var chart7CreatedSeries;
             var chart7_last_month;
@@ -1624,13 +1608,13 @@
                 drawChart7();
 
                 chart7Timeout0 = setTimeout(function() {
-                    chart7.addSeries(chart7CreatedSeries[0]);    
+                    chart7.addSeries(chart7CreatedSeries[0]);
                 }, 0);
                 chart7Timeout1 = setTimeout(function() {
-                    chart7.addSeries(chart7CreatedSeries[1]);    
+                    chart7.addSeries(chart7CreatedSeries[1]);
                 }, 2000);
                 chart7Timeout2 = setTimeout(function() {
-                    chart7.addSeries(chart7CreatedSeries[2]);    
+                    chart7.addSeries(chart7CreatedSeries[2]);
                 }, 4000);
 
                 chart7Timeout3 =setTimeout(function () {
@@ -1643,7 +1627,7 @@
 
             //Chart 7 specific functions
             function drawChart7() {
-                
+
                 var jsonStatData = chart7Data;
                 var jsonStatUtflutningurData= chart7bData;
 
@@ -1670,7 +1654,7 @@
 
                 //Format Data
 
-                
+
 
 
                 var innflutningurdata = [];
@@ -1684,15 +1668,13 @@
 
 
                     innflutningur = ds.Data({ "BEC-groups": "0", "year": ds.Dimension("year").id[i + yearinnflutningurutflutningurdifference] }, false).filter(function(n) { return n; });
-                    
-                    
+
 
                     utflutningur = dsutflutningur.Data({ "unit": "0", "commodity group": "0", "year": dsutflutningur.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    
-                    
+
 
                     for (var j = 0; j < utflutningur.length; j++) {
-                        
+
                         yaxisinnflutningur.push[innflutningur[j]];
                         yaxisutflutningur.push[-utflutningur[j]];
 
@@ -1715,27 +1697,27 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Útflutningur',
+                    name: "Útflutningur",
                     data: utflutningurdata,
-                    color: '#7fb800',
+                    color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Innflutningur',
+                    name: "Innflutningur",
                     data: innflutningurdata,
-                    color: '#00a6ed',
+                    color: "#00a6ed",
                     borderWidth: 0,
-                    
+
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
-                    name: 'Handilsjavni',
-                    type: 'spline',
+                    name: "Handilsjavni",
+                    type: "spline",
                     data: nettoflytingdata,
-                    color: '#fff',
+                    color: "#fff",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1755,25 +1737,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart7').highcharts({
+                $("#chart7").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart7 = this;
@@ -1796,49 +1778,48 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart7_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart7_last_month - 65743595833,
                         max: chart7_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
 
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(Math.abs(this.value),0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -1848,12 +1829,12 @@
                     },
                     plotOptions: {
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                             dataGrouping:{
                                 enabled: true,
                                 approximation: "sum",
-                                units:[ ['year', null]]
+                                units:[ ["year", null]]
                             }
                         }
                     },
@@ -1901,7 +1882,7 @@
 
                 },function(data) {
                     chart7Data = data;
-                    loadDataAndBuildChart7b(); 
+                    loadDataAndBuildChart7b();
                 } );
             }
 
@@ -1967,13 +1948,14 @@
 //---------------------------------------------------------
 //                                CHART 8
 //---------------------------------------------------------
-            var chart8; 
+
+            var chart8;
             var chart8Data;
             var chart8CreatedSeries;
             var chart8_last_month;
             var chart8Timeout0;
             var chart8Timeout1;
-            var chart8Timeout2;            
+            var chart8Timeout2;
             var chart8Timeout3;
             var chart8Timeout4;
 
@@ -1987,16 +1969,16 @@
                 drawChart8();
 
                 chart8Timeout0 = setTimeout(function() {
-                    chart8.addSeries(chart8CreatedSeries[0]);    
+                    chart8.addSeries(chart8CreatedSeries[0]);
                 }, 100);
                 chart8Timeout1 = setTimeout(function() {
-                    chart8.addSeries(chart8CreatedSeries[1]);    
+                    chart8.addSeries(chart8CreatedSeries[1]);
                 }, 2000);
                 chart8Timeout2 = setTimeout(function() {
-                    chart8.addSeries(chart8CreatedSeries[2]);    
+                    chart8.addSeries(chart8CreatedSeries[2]);
                 }, 4000);
                 chart8Timeout3 = setTimeout(function() {
-                    chart8.addSeries(chart8CreatedSeries[3]);    
+                    chart8.addSeries(chart8CreatedSeries[3]);
                 }, 6000);
 
                 chart8Timeout4 =setTimeout(function () {
@@ -2009,7 +1991,7 @@
 
             //Chart 8 specific functions
             function drawChart8() {
-                
+
                 var jsonStatData = chart8Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -2017,8 +1999,8 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-                    
-            
+
+
             //Format Data
 
                 var onnurfiskaslogdata = [];
@@ -2059,9 +2041,9 @@
                 //Build Series
                 var createdSeries = [
                 {
-                    name: 'Toskur, hýsa, upsi',
+                    name: "Toskur, hýsa, upsi",
                     data: toskurhysaupsidata,
-                    color: '#000E30',
+                    color: "#000E30",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2069,9 +2051,9 @@
                     index: 3
                 },
                 {
-                    name: 'Makrelur, sild, svartkjaftur',
+                    name: "Makrelur, sild, svartkjaftur",
                     data: makrelursildsvartkjafturdata,
-                    color: '#00a6ed',
+                    color: "#00a6ed",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2079,19 +2061,19 @@
                     index: 2
                 },
                 {
-                    name: 'Alifiskur',
+                    name: "Alifiskur",
                     data: alifiskurdata,
-                    color: '#f7b538',
+                    color: "#f7b538",
                     tooltip: {
                         valueDecimals: 1
                     },
                     legendIndex:3,
                     index: 1
-                },                
+                },
                 {
-                    name: 'Onnur fiskasløg',
+                    name: "Onnur fiskasløg",
                     data: onnurfiskaslogdata,
-                    color: '#C6E0FF',
+                    color: "#C6E0FF",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2110,25 +2092,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart8').highcharts({
+                $("#chart8").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart8 = this;
@@ -2151,51 +2133,50 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart8_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart8_last_month - 65743595833,
                         max: chart8_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                         showLastLabel: true,
- 
+
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
                         min: 0,
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(this.value, 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -2205,21 +2186,21 @@
                     },
                     plotOptions: {
                         column: {
-                            stacking: 'normal',
-                            borderWidth: 0                
-                        },                           
+                            stacking: "normal",
+                            borderWidth: 0
+                        },
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                             dataGrouping:{
                                 enabled: true,
-                                type: 'column',                      
+                                type: "column",
                                 approximation: "sum",
-                                units:[ ['year', [null]]]
-                            },                            
+                                units:[ ["year", [null]]]
+                            },
                             pointPadding: 0,
-                            groupPadding: 0.2                        
-                        },                        
+                            groupPadding: 0.2
+                        },
 
                     },
                     series: []
@@ -2256,7 +2237,7 @@
                               "48"
                             ]
                           }
-                        },                        
+                        },
                         {
                             "code": "month",
                             "selection": {
@@ -2299,13 +2280,13 @@
 //---------------------------------------------------------
 //                                CHART 13
 //---------------------------------------------------------
-            var chart13; 
+            var chart13;
             var chart13Data;
             var chart13CreatedSeries;
             var chart13_last_month;
             var chart13Timeout0;
             var chart13Timeout1;
-            var chart13Timeout2;            
+            var chart13Timeout2;
             var chart13Timeout3;
             var chart13Timeout4;
 
@@ -2319,16 +2300,16 @@
                 drawChart13();
 
                 chart13Timeout0 = setTimeout(function() {
-                    chart13.addSeries(chart13CreatedSeries[0]);    
+                    chart13.addSeries(chart13CreatedSeries[0]);
                 }, 100);
                 chart13Timeout1 = setTimeout(function() {
-                    chart13.addSeries(chart13CreatedSeries[1]);    
+                    chart13.addSeries(chart13CreatedSeries[1]);
                 }, 2000);
                 chart13Timeout2 = setTimeout(function() {
-                    chart13.addSeries(chart13CreatedSeries[2]);    
+                    chart13.addSeries(chart13CreatedSeries[2]);
                 }, 4000);
                 chart13Timeout3 = setTimeout(function() {
-                    chart13.addSeries(chart13CreatedSeries[3]);    
+                    chart13.addSeries(chart13CreatedSeries[3]);
                 }, 6000);
 
                 chart13Timeout4 =setTimeout(function () {
@@ -2341,7 +2322,7 @@
 
             //Chart 13 specific functions
             function drawChart13() {
-                
+
                 var jsonStatData = chart13Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
@@ -2349,7 +2330,7 @@
                 year = ds.Dimension("year").id;
                 var fLen = year.length;
                 m = ds.Dimension("month").id;
-            
+
             //Format Data
 
                 var annarbotnfiskurdata = [];
@@ -2384,9 +2365,9 @@
                 //Build Series
                 var createdSeries = [
                 {
-                    name: 'Toskur',
+                    name: "Toskur",
                     data: toskurdata,
-                    color: '#000E30',
+                    color: "#000E30",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2394,9 +2375,9 @@
                     index: 3
                 },
                 {
-                    name: 'Hýsa',
+                    name: "Hýsa",
                     data: hysadata,
-                    color: '#00a6ed',
+                    color: "#00a6ed",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2404,19 +2385,19 @@
                     index: 2
                 },
                 {
-                    name: 'Upsi',
+                    name: "Upsi",
                     data: upsidata,
-                    color: '#f7b538',
+                    color: "#f7b538",
                     tooltip: {
                         valueDecimals: 1
                     },
                     legendIndex:3,
                     index: 1
-                },                
+                },
                 {
-                    name: 'Annar botnfiskur',
+                    name: "Annar botnfiskur",
                     data: annarbotnfiskurdata,
-                    color: '#C6E0FF',
+                    color: "#C6E0FF",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2435,25 +2416,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart13').highcharts({
+                $("#chart13").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'column',
+                        type: "column",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart13 = this;
@@ -2476,51 +2457,50 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        min: chart13_last_month - 65743595833, 
+                        type: "datetime",
+                        min: chart13_last_month - 65743595833,
                         max: chart13_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                         showLastLabel: true,
- 
+
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
                         min: 0,
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
                                 return Highcharts.numberFormat(this.value, 0);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px'
+                                color: "#fff",
+                                font: "11px"
                             }
                         },
                     },
@@ -2530,21 +2510,21 @@
                     },
                     plotOptions: {
                         column: {
-                            stacking: 'normal',
-                            borderWidth: 0                
-                        },                           
+                            stacking: "normal",
+                            borderWidth: 0
+                        },
                         series: {
-                            stacking: 'normal',
+                            stacking: "normal",
                             showInNavigator: true,
                             dataGrouping:{
                                 enabled: true,
-                                type: 'column',                      
+                                type: "column",
                                 approximation: "sum",
-                                units:[ ['year', [null]]]
-                            },                            
+                                units:[ ["year", [null]]]
+                            },
                             pointPadding: 0,
-                            groupPadding: 0.2                        
-                        },                        
+                            groupPadding: 0.2
+                        },
 
                     },
                     series: []
@@ -2585,7 +2565,7 @@
                               "12"
                             ]
                             }
-                        }                        
+                        }
                       ],
                     "response": {
                         "format": "json-stat"
@@ -2604,19 +2584,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
 //---------------------------------------------------------
 //                       CHART 9
 //---------------------------------------------------------
-            var chart9; 
+            var chart9;
             var chart9Data;
             var chart9_last_month;
             var chart9Timeout0;
@@ -2629,7 +2600,7 @@
                 chart9Timeout0 = setTimeout(function () {
                     chart9.update({xAxis: {
                         min: null,
-                        max:null,
+                        max: null
                     }});
                 }, 25000);
             }
@@ -2666,9 +2637,9 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Gistingar',
+                    name: "Gistingar",
                     data: gistingardata,
-                    color: '#fff',
+                    color: "#fff",
                     tooltip: {
                         valueDecimals: 1
                     }
@@ -2683,17 +2654,17 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart9').highcharts({
+                $("#chart9").highcharts({
                     credits: {
                         enabled: false
                     },
@@ -2701,7 +2672,7 @@
                         type:"line",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart9 = this;
@@ -2723,13 +2694,13 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
@@ -2737,38 +2708,37 @@
                             enabled: false
                         },
                         tickInterval: 2629746000,
-                        type: 'datetime',
-                        lineColor: '#fff',
-                        tickColor: '#fff',
-                        min: chart9_last_month - 65743595833, 
+                        type: "datetime",
+                        lineColor: "#fff",
+                        tickColor: "#fff",
+                        min: chart9_last_month - 65743595833,
                         max: chart9_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         }
 
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
-                                return Highcharts.numberFormat(this.value,0) + '';
+                                return Highcharts.numberFormat(this.value,0) + "";
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                     },
@@ -2777,7 +2747,7 @@
                     },
                     legend: {
                         enabled: false
-                    },                    
+                    },
                     plotOptions: {
                         line: {
                             marker: {
@@ -2785,19 +2755,18 @@
                             },
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
-                                  if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  Highcharts.dateFormat('%b &apos;%y',this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,0) + "</div>");
+                                  if (this.point.category === last.category && this.point.y === last.y) {
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + Highcharts.dateFormat("%b &apos;%y",this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0) + "</div>");
                                   }
                                   else {return};
-                                }                             
-                            }                            
+                                }
+                            }
                         },
                         series: {
                             showInNavigator: true
@@ -2859,7 +2828,7 @@
 //---------------------------------------------------------
 //                       CHART 10
 //---------------------------------------------------------
-            var chart10; 
+            var chart10;
             var chart10Data;
             var chart10_last_month;
             var chart10Timeout0;
@@ -2876,7 +2845,7 @@
                     }});
                 }, 25000);
             }
- 0
+
             //Chart 10 specific functions
             function drawChart10() {
                 var jsonStatData = chart10Data;
@@ -2896,16 +2865,16 @@
                     var pristal = ds.Data({ "commodity group": "BRP", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
                     for (var j = 0; j < pristal.length; j++) {
-                        
+
                         var quarters = q[j];
-                        quarters = q[j].replace('Q', '');
+                        quarters = q[j].replace("Q", "");
 
                         pristaldata.push([Date.parse(year[i]) + (7889238000*(quarters-1)), pristal[j]]);
-                        
+
                     }
                 }
 
-                
+
                 var chart10_last_month = pristaldata[pristaldata.length - 1];
                 chart10_last_month = chart10_last_month[0];
 
@@ -2913,9 +2882,9 @@
 
                 //Build Series
                 var createdSeries = [{
-                    name: 'Prístalið',
+                    name: "Prístalið",
                     data: pristaldata,
-                    color: '#fff',
+                    color: "#fff",
                     tooltip: {
                         valueDecimals: 1
                     }
@@ -2930,17 +2899,17 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y-%b', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0, ',', '.');
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
                         });
 
                     return s;
                 }
 
                 //Build Chart
-                $('#chart10').highcharts({
+                $("#chart10").highcharts({
                     credits: {
                         enabled: false
                     },
@@ -2948,7 +2917,7 @@
                         type:"line",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         borderWidth: 0,
-                        renderTo: 'container',
+                        renderTo: "container",
                         events: {
                             load: function () {
                                 chart10 = this;
@@ -2970,63 +2939,61 @@
                         text: ""
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
                     xAxis: {
                        title: {
                             enabled: false
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
-                        min: chart10_last_month - 65743595833, 
+                        lineColor: "#fff",
+                        tickColor: "#fff",
+                        min: chart10_last_month - 65743595833,
                         max: chart10_last_month,
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
-                        tickColor: '#fff',
+                        tickColor: "#fff",
                         tickInterval: 7889238000,
                         labels: {
                             formatter: function() {
-                                return "Q" + (parseInt(Highcharts.dateFormat('%m', this.value)/3)+1) + " '"+ Highcharts.dateFormat('%y', this.value)
-                                    ;
+                                return "Q" + (parseInt(Highcharts.dateFormat("%m", this.value)/3)+1) + " '"+ Highcharts.dateFormat("%y", this.value);
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
-                        },                        
-                        type: 'datetime',
+                        },
+                        type: "datetime",
 
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: "",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
-                                return Highcharts.numberFormat(this.value,1) + '';
+                                return Highcharts.numberFormat(this.value,1) + "";
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
                     },
@@ -3035,7 +3002,7 @@
                     },
                     legend: {
                         enabled: false
-                    },                    
+                    },
                     plotOptions: {
                         line: {
                             marker: {
@@ -3043,19 +3010,18 @@
                             },
                             dataLabels: {
                                 enabled: true,
-                                color: '#FFF',
+                                color: "#FFF",
                                 useHTML: true,
                                 crop: false,
-                                overflow: false,                              
+                                overflow: false,
                                 formatter: function() {
                                   var last  = this.series.data[this.series.data.length - 1];
                                   if (this.point.category === last.category  && this.point.y === last.y) {
-                                    
-                                    return ('<div class="MyDataLabelTooltip">' + '<span class="datetext">' +  (parseInt(Highcharts.dateFormat('%m', this.point.x)/3)+1) + ". ársfj." +  Highcharts.dateFormat(' %Y', this.point.x) + "</span>" +  " <br />" +  Highcharts.numberFormat(this.point.y,0) + "</div>");
+                                    return ('<div class="MyDataLabelTooltip"><span class="datetext">' + (parseInt(Highcharts.dateFormat("%m", this.point.x)/3)+1) + ". ársfj." + Highcharts.dateFormat(" %Y", this.point.x) + "</span><br />" + Highcharts.numberFormat(this.point.y,0) + "</div>");
                                   }
                                   else {return};
-                                }                             
-                            }                            
+                                }
+                            }
                         },
                         series: {
                             showInNavigator: true
@@ -3109,11 +3075,11 @@
 
             //Ein variabul sum inniheldur data frá eurostat
             var eurods = null;
-            //        var dkData= {
-            //			label: "Denmark",
-            //			geo: "DK",
-            //			val: []
-            //		};
+            // var dkData= {
+            //               label: "Denmark",
+            //               geo: "DK",
+            //               val: []
+            // };
 
             function buildChart12(jsonStatData) {
 
@@ -3164,7 +3130,7 @@
                 var createdSeries = [{
                     name: "Føroyar",
                     data: hagstovanFoArray,
-                    color: '#fff',
+                    color: "#fff",
                     tooltip: {
                         valueDecimals: 0
                     }
@@ -3173,7 +3139,7 @@
                 {
                     name: "Ísland",
                     data: eurostatISArray,
-                    color: '#00a6ed',
+                    color: "#00a6ed",
                     tooltip: {
                         valueDecimals: 0
                     }
@@ -3182,14 +3148,14 @@
                 {
                     name: "Danmark",
                     data: eurostatDkArray,
-                    color: '#9b1212',
+                    color: "#9b1212",
                     tooltip: {
                         valueDecimals: 0
                     }
                 }, {
                     name: "ES",
                     data: eurostatEUArray,
-                    color: '#f7b358',
+                    color: "#f7b358",
                     tooltip: {
                         valueDecimals: 0
                     }
@@ -3205,25 +3171,25 @@
 
                 //Build Tooltip
                 var tooltipFunction = function () {
-                    var s = '<b>' + Highcharts.dateFormat('%Y', this.x) + '</b>';
+                    var s = "<b>" + Highcharts.dateFormat("%Y", this.x) + "</b>";
                     var sum = 0;
                     $.each(this.points,
                         function (i, point) {
-                            s += '<br/>' + point.series.name + ': ' + Highcharts.numberFormat(point.y, .0) + ' (' + Highcharts.numberFormat(this.percentage, 1) + ' %)';
+                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0) + " (" + Highcharts.numberFormat(this.percentage, 1) + " %)";
                             sum += point.y;
                         });
 
-                    s += '<br/>Tls.: ' + sum;
+                    s += "<br/>Tls.: " + sum;
                     return s;
                 }
 
                 //Build Chart
-                $('#chart12').highcharts({
+                $("#chart12").highcharts({
                     credits: {
                         enabled: false
                     },
                     chart: {
-                        type: 'line',
+                        type: "line",
                         backgroundColor: "rgba(255, 255, 255, 0)",
                         color: "#f00"
                     },
@@ -3238,56 +3204,55 @@
                         enabled: false
                     },
                     legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'top',
+                        layout: "horizontal",
+                        align: "center",
+                        verticalAlign: "top",
 
                         itemStyle: {
-                            color: '#fff',
-                            fontWeight: 'normal'
+                            color: "#fff",
+                            fontWeight: "normal"
                         }
                     },
 
                     title: {
-                        text: ''
+                        text: ""
                     },
                     subtitle: {
-                        text: ''
+                        text: ""
                     },
                     xAxis: {
                         title: {
                             enabled: false
                         },
-                        type: 'datetime',
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        type: "datetime",
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         },
 
                     },
                     yAxis: {
                         title: {
-                            text: '% í fátækraváða',
+                            text: "% í fátækraváða",
                             style: {
-                                color: '#fff',
-                                fontWeight: 'normal',
-                                fontSize: '12px',
-                                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontWeight: "normal",
+                                fontSize: "12px"
                             }
                         },
-                        lineColor: '#fff',
-                        tickColor: '#fff',
+                        lineColor: "#fff",
+                        tickColor: "#fff",
                         labels: {
                             formatter: function () {
-                                return this.value + ' %';
+                                return this.value + " %";
                             },
                             style: {
-                                color: '#fff',
-                                font: '11px Trebuchet MS, Verdana, sans-serif'
+                                color: "#fff",
+                                fontSize: "11px"
                             }
                         }
 
@@ -3299,12 +3264,12 @@
                     },
                     plotOptions: {
                         area: {
-                            stacking: 'normal',
-                            lineColor: '#fff',
+                            stacking: "normal",
+                            lineColor: "#fff",
                             lineWidth: 1,
                             marker: {
                                 lineWidth: 1,
-                                lineColor: '#fff'
+                                lineColor: "#fff"
                             }
                         },
                         line: {
@@ -3336,7 +3301,7 @@
 
             }
 
-            
+
             //HELPER FUNCTION
             function POST(url, query, main) {
                 $.ajax({
@@ -3353,16 +3318,16 @@
             $(function () {
                 loadDataAndBuildChart1();
                 loadDataAndBuildChart2();
-                loadDataAndBuildChart3();                
+                loadDataAndBuildChart3();
                 loadDataAndBuildChart4();
                 loadDataAndBuildChart5();
                 loadDataAndBuildChart6();
                 loadDataAndBuildChart7();
-                loadDataAndBuildChart8();  
+                loadDataAndBuildChart8();
                 loadDataAndBuildChart9();
-                loadDataAndBuildChart10();                                
+                loadDataAndBuildChart10();
                 loadDataAndBuildChart12();
-                loadDataAndBuildChart13(); 
+                loadDataAndBuildChart13();
             });
 </script>
 
@@ -3411,7 +3376,7 @@
                         <div id="chart3"></div>
                     </div>
             </div>
-        </section>        
+        </section>
 
 
         <section data-background="assets/arbeidsloysi.jpg" data-background-transition="fade" data-autoslide="4000">
@@ -3499,7 +3464,7 @@
                         <div id="chart13"></div>
                     </div>
             </div>
-        </section>        
+        </section>
 
         <section data-background="assets/gistingar.jpg" data-background-transition="fade" data-autoslide="4000">
             <h1><img src="assets/hagstova_logo_white.svg" alt="Hagstova Føroya" class="logo" />Gistingar</h1>
@@ -3528,7 +3493,7 @@
                         <div id="chart10"></div>
                     </div>
             </div>
-        </section>    
+        </section>
 
 
 <!--        <section data-background="assets/fatakravadi.jpg" data-autoslide="4000">
@@ -3571,68 +3536,62 @@
 
                 // More info https://github.com/hakimel/reveal.js#dependencies
                 dependencies: [
-                    { src: 'plugin/notes/notes.js', async: true },
-                    { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+                    { src: "plugin/notes/notes.js", async: true },
+                    { src: "plugin/highlight/highlight.js", async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
                 ]
             });
 
 
-            Reveal.addEventListener('folkatal', function () {
+            Reveal.addEventListener("folkatal", function () {
                 startAnimatingChart1();
             }, false);
 
-            Reveal.addEventListener('tilfraflyting', function () {
+            Reveal.addEventListener("tilfraflyting", function () {
                 startAnimatingChart2();
             }, false);
 
 
-            Reveal.addEventListener('burdaravlop', function () {
+            Reveal.addEventListener("burdaravlop", function () {
                 startAnimatingChart3();
             }, false);
 
-            Reveal.addEventListener('arbeidsloysi', function () {
+            Reveal.addEventListener("arbeidsloysi", function () {
                 startAnimatingChart4();
             }, false);
 
 
-            Reveal.addEventListener('lontakarar', function () {
+            Reveal.addEventListener("lontakarar", function () {
                 startAnimatingChart5();
             }, false);
 
-            Reveal.addEventListener('lonargjaldingar', function () {
+            Reveal.addEventListener("lonargjaldingar", function () {
                 startAnimatingChart6();
             }, false);
 
-            Reveal.addEventListener('innutflutningur', function () {
+            Reveal.addEventListener("innutflutningur", function () {
                 startAnimatingChart7();
             }, false);
 
-            Reveal.addEventListener('fiskavoruutflutningur', function () {
+            Reveal.addEventListener("fiskavoruutflutningur", function () {
                 startAnimatingChart8();
             }, false);
 
-            Reveal.addEventListener('avreidingar', function () {
+            Reveal.addEventListener("avreidingar", function () {
                 startAnimatingChart13();
             }, false);
 
-            Reveal.addEventListener('gistingar', function () {
+            Reveal.addEventListener("gistingar", function () {
                 startAnimatingChart9();
             }, false);
 
-            Reveal.addEventListener('pristal', function () {
+            Reveal.addEventListener("pristal", function () {
                 startAnimatingChart10();
             }, false);
 
-            Reveal.addEventListener('fragmentshown', function (event) {
+            Reveal.addEventListener("fragmentshown", function (event) {
                 // Fragmentlistener
 
-
-
-
-
-
             });
-
 
 
             // Slide every 30 seconds
@@ -3642,15 +3601,7 @@
             });
 
 
-
-
-
         </script>
-
-
-
-
-
 
 
 </body>
