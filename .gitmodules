@@ -1,0 +1,9 @@
+[submodule "lib/js/JSON-stat"]
+	path = lib/js/JSON-stat
+	url = https://github.com/badosa/JSON-stat.git
+[submodule "lib/js/jquery-dist"]
+	path = lib/js/jquery-dist
+	url = https://github.com/jquery/jquery-dist.git
+[submodule "lib/js/highstock-release"]
+	path = lib/js/highstock-release
+	url = https://github.com/highcharts/highstock-release
