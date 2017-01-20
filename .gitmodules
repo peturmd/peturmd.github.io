@@ -7,3 +7,6 @@
 [submodule "lib/js/highstock-release"]
 	path = lib/js/highstock-release
 	url = https://github.com/highcharts/highstock-release
+[submodule "lib/font/hagstova.fo.nts"]
+	path = lib/font/hagstova.fo.nts
+	url = https://github.com/hagstovan/hagstova.fo.nts.git
